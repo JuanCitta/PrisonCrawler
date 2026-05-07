@@ -30,9 +30,9 @@ public class Projectile : MonoBehaviour
             PlayerHealth.Instance?.TakeDamage(damage);
             Destroy(gameObject);
         }
-        else if (!other.CompareTag("Enemy") && !other.CompareTag("Projectile"))
+        else if (!other.CompareTag("Enemy"))
         {
-            // Destrói ao colidir com paredes ou qualquer coisa que não seja inimigo/projétil
+            // Destrói ao colidir com paredes ou qualquer coisa que não seja inimigo
             Destroy(gameObject);
         }
     }
