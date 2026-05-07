@@ -29,12 +29,13 @@ public class RoomManager : MonoBehaviour
             return;
         }
 
+        option1 = RoomType.Combat;
+
         do
         {
-            option1 = GetRandomRoom();
             option2 = GetRandomRoom();
         }
-        while (option1 == option2);
+        while (option2 == RoomType.Combat);
 
         AssignDoors(option1, option2);
     }
