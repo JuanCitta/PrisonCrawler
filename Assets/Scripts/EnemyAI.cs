@@ -61,7 +61,9 @@ public class EnemyAI : MonoBehaviour
         if (projectilePrefab == null || player == null) return;
 
         Vector2 dir = ((Vector2)player.position - (Vector2)transform.position).normalized;
-        GameObject proj = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
+        // Spawna levemente à frente do inimigo para não colidir com o próprio collider
+        Vector2 spawnPos = (Vector2)transform.position + dir * 0.8f;
+        GameObject proj = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
 
         Projectile projectile = proj.GetComponent<Projectile>();
         if (projectile != null)
