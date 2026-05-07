@@ -20,6 +20,9 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    // Disparado quando uma quest é concluída — a QuestNotificationUI escuta este evento
+    public static event System.Action<string> OnQuestCompleted;
+
     public void StartOrProgressQuest(string npcId)
     {
         QuestData quest = activeQuests.Find(q => q.npcId == npcId);
@@ -30,7 +33,7 @@ public class QuestManager : MonoBehaviour
             {
                 npcId = npcId,
                 currentProgress = 0,
-                requiredProgress = Random.Range(2, 6) 
+                requiredProgress = Random.Range(2, 6)
             };
 
             activeQuests.Add(quest);
@@ -46,15 +49,19 @@ public class QuestManager : MonoBehaviour
 
     void CompleteQuest(QuestData quest)
     {
-        Debug.Log("Quest completa: " + quest.npcId);
-
+        OnQuestCompleted?.Invoke(quest.npcId);
         GiveReward(quest.npcId);
-
         activeQuests.Remove(quest);
     }
 
     void GiveReward(string npcId)
     {
+        // TODO: implementar recompensas
         Debug.Log("Recompensa do NPC: " + npcId);
+    }
+
+    public void Reset()
+    {
+        activeQuests.Clear();
     }
 }
