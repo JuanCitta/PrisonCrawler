@@ -6,6 +6,7 @@ public class Projectile : MonoBehaviour
     public float speed = 5f;
     public int damage = 1;
     public float lifetime = 5f;
+    public bool isPlayerProjectile = false;
 
     private Vector2 direction;
 
@@ -26,16 +27,32 @@ public class Projectile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (isPlayerProjectile)
         {
-            PlayerHealth.Instance?.TakeDamage(damage);
-            Destroy(gameObject);
+            // Projétil do jogador: acerta inimigos (detectado pelo componente EnemyHealth)
+            EnemyHealth enemy = other.GetComponent<EnemyHealth>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+                Destroy(gameObject);
+                return;
+            }
         }
-        else if (other.GetComponent<TilemapCollider2D>() != null
-              || other.GetComponent<CompositeCollider2D>() != null)
+        else
         {
-            // Destrói apenas ao colidir com paredes (tilemaps)
-            // Inimigos são ignorados independente de tag
+            // Projétil do inimigo: acerta o jogador
+            if (other.CompareTag("Player"))
+            {
+                PlayerHealth.Instance?.TakeDamage(damage);
+                Destroy(gameObject);
+                return;
+            }
+        }
+
+        // Ambos destroem ao bater em parede (tilemap)
+        if (other.GetComponent<TilemapCollider2D>() != null
+         || other.GetComponent<CompositeCollider2D>() != null)
+        {
             Destroy(gameObject);
         }
     }
