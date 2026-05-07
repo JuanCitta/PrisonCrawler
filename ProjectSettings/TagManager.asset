@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 3
+  tags:
+  - Enemy
+  - Item
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 2890814963
+    locked: 0
+  - name: WalkInFront
+    uniqueID: 645305453
+    locked: 0
+  - name: Collision
+    uniqueID: 3272559273
+    locked: 0
+  - name: Player
+    uniqueID: 92201967
+    locked: 0
+  - name: WalkBehind
+    uniqueID: 1292511177
+    locked: 0
+  - name: Decor
+    uniqueID: 1052770341
+    locked: 0
+  m_RenderingLayers:
+  - Default
