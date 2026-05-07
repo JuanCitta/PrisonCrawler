@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Projectile : MonoBehaviour
 {
@@ -30,9 +31,11 @@ public class Projectile : MonoBehaviour
             PlayerHealth.Instance?.TakeDamage(damage);
             Destroy(gameObject);
         }
-        else if (!other.CompareTag("Enemy"))
+        else if (other.GetComponent<TilemapCollider2D>() != null
+              || other.GetComponent<CompositeCollider2D>() != null)
         {
-            // Destrói ao colidir com paredes ou qualquer coisa que não seja inimigo
+            // Destrói apenas ao colidir com paredes (tilemaps)
+            // Inimigos são ignorados independente de tag
             Destroy(gameObject);
         }
     }
