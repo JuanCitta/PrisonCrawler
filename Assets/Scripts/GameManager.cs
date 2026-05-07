@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
         currentFloor = 0;
         currentNPC   = null;
         currentBiome = BiomeType.Cave;
+        QuestManager.Instance?.Reset();
         SceneManager.LoadScene("StartRoom");
     }
 

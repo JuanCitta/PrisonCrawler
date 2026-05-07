@@ -12,6 +12,10 @@ public class EnemyAI : MonoBehaviour
     public float shootInterval = 2f;
     public float projectileSpeed = 5f;
 
+    [Header("Separação")]
+    public float separationRadius = 1.2f;
+    public float separationForce  = 3f;
+
     private Transform player;
     private Rigidbody2D rb;
     private float shootTimer;
@@ -38,14 +42,16 @@ public class EnemyAI : MonoBehaviour
 
         float distance = Vector2.Distance(transform.position, player.position);
 
+        Vector2 separation = GetSeparationForce();
+
         if (distance > stopDistance)
         {
             Vector2 dir = ((Vector2)player.position - (Vector2)transform.position).normalized;
-            rb.linearVelocity = dir * moveSpeed;
+            rb.linearVelocity = dir * moveSpeed + separation * separationForce;
         }
         else
         {
-            rb.linearVelocity = Vector2.zero;
+            rb.linearVelocity = separation * separationForce;
         }
 
         shootTimer -= Time.deltaTime;
@@ -71,6 +77,24 @@ public class EnemyAI : MonoBehaviour
             projectile.speed = projectileSpeed;
             projectile.SetDirection(dir);
         }
+    }
+
+    Vector2 GetSeparationForce()
+    {
+        Vector2 force = Vector2.zero;
+        Collider2D[] nearby = Physics2D.OverlapCircleAll(transform.position, separationRadius);
+
+        foreach (var col in nearby)
+        {
+            if (col.gameObject == gameObject) continue;
+            if (col.GetComponent<EnemyAI>() == null) continue;
+
+            Vector2 diff = (Vector2)transform.position - (Vector2)col.transform.position;
+            if (diff.sqrMagnitude > 0f)
+                force += diff.normalized / diff.magnitude;
+        }
+
+        return force;
     }
 
     void OnDestroy()
