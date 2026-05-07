@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class Door : MonoBehaviour
 {
@@ -6,6 +7,12 @@ public class Door : MonoBehaviour
     public string npcId;
 
     private bool isLocked = true;
+    private TMP_Text label;
+
+    void Awake()
+    {
+        label = GetComponentInChildren<TMP_Text>();
+    }
 
     public void Unlock()
     {
@@ -16,6 +23,12 @@ public class Door : MonoBehaviour
     {
         nextRoom = type;
         npcId    = npc;
+
+        if (label != null)
+        {
+            label.text  = npc ?? "";
+            label.color = GetNPCColor(npc);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -25,4 +38,12 @@ public class Door : MonoBehaviour
             GameManager.Instance.LoadRoom(nextRoom, npcId);
         }
     }
+
+    static Color GetNPCColor(string npc) => npc switch
+    {
+        "Knight" => new Color(1f,  0.45f, 0.2f),   // laranja
+        "Archer" => new Color(0.3f, 0.9f, 0.3f),   // verde
+        "Mage"   => new Color(0.65f, 0.3f, 1f),    // roxo
+        _        => Color.white
+    };
 }
