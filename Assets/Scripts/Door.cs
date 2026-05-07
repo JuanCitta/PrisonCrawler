@@ -12,17 +12,17 @@ public class Door : MonoBehaviour
         isLocked = false;
     }
 
+    public void SetRoom(RoomType type, string npc = null)
+    {
+        nextRoom = type;
+        npcId    = npc;
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!isLocked && other.CompareTag("Player"))
         {
-            if (nextRoom == RoomType.Combat)
-            {
-                GameManager.Instance.currentNPC = npcId;
-            }
-            Debug.Log("PLAYER ENTROU NA PORTA");
-
-            GameManager.Instance.LoadRoom(nextRoom);
+            GameManager.Instance.LoadRoom(nextRoom, npcId);
         }
     }
 }
