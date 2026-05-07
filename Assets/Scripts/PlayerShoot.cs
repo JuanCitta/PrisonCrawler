@@ -15,6 +15,12 @@ public class PlayerShoot : MonoBehaviour
         cam = Camera.main;
     }
 
+    void OnEnable()
+    {
+        // Re-busca a câmera ao entrar em nova cena (o Player persiste via DontDestroyOnLoad)
+        cam = Camera.main;
+    }
+
     void Update()
     {
         cooldownTimer -= Time.deltaTime;
@@ -28,6 +34,7 @@ public class PlayerShoot : MonoBehaviour
 
     void Shoot()
     {
+        if (cam == null) cam = Camera.main;
         Vector2 mouseWorld = cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         Vector2 dir = (mouseWorld - (Vector2)transform.position).normalized;
 
