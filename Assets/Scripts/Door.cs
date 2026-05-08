@@ -35,6 +35,10 @@ public class Door : MonoBehaviour
     {
         if (!isLocked && other.CompareTag("Player"))
         {
+            // Progressão de quest: só quando o player entra numa sala de combate com NPC
+            if (nextRoom == RoomType.Combat && !string.IsNullOrEmpty(npcId))
+                QuestManager.Instance?.StartOrProgressQuest(npcId);
+
             GameManager.Instance.LoadRoom(nextRoom, npcId);
         }
     }
