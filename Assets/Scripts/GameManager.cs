@@ -23,20 +23,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void LoadRoom(RoomType type)
+    public void LoadRoom(RoomType type, string npcId = null)
     {
         currentFloor++;
-
         UpdateBiome();
 
         switch (type)
         {
             case RoomType.Combat:
+                currentNPC = npcId;
                 SceneManager.LoadScene("CombatRoom");
                 break;
 
+            // Reservado para implementações futuras
             case RoomType.Heal:
-                currentNPC = null; 
+                currentNPC = null;
                 SceneManager.LoadScene("HealRoom");
                 break;
 
@@ -50,6 +51,20 @@ public class GameManager : MonoBehaviour
                 SceneManager.LoadScene("RiskRoom");
                 break;
         }
+    }
+
+    public void ResetGame()
+    {
+        currentFloor = 0;
+        currentNPC   = null;
+        currentBiome = BiomeType.Cave;
+        QuestManager.Instance?.Reset();
+
+        // Reseta posição do player para o centro antes de carregar a cena
+        if (PlayerHealth.Instance != null)
+            PlayerHealth.Instance.transform.position = Vector3.zero;
+
+        SceneManager.LoadScene("StartRoom");
     }
 
     void UpdateBiome()

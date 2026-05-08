@@ -7,18 +7,14 @@ public class CombatManager : MonoBehaviour
 
     void Start()
     {
-        enemiesAlive = GameObject.FindGameObjectsWithTag("Enemy").Length;
         doors = FindObjectsOfType<Door>();
-        foreach (var door in doors)
-            door.Unlock(); 
+        enemiesAlive = GameObject.FindGameObjectsWithTag("Enemy").Length;
+
+        if (enemiesAlive <= 0)
+        {
+            UnlockDoors();
+        }
     }
-
-    void Update()
-    {
-    }
-
-
-
 
     public void OnEnemyKilled()
     {
@@ -29,17 +25,10 @@ public class CombatManager : MonoBehaviour
             UnlockDoors();
         }
     }
+
     void UnlockDoors()
     {
         foreach (var door in doors)
             door.Unlock();
-
-        // pega o NPC atual
-        string npc = GameManager.Instance.currentNPC;
-
-        if (!string.IsNullOrEmpty(npc))
-        {
-            QuestManager.Instance.StartOrProgressQuest(npc);
-        }
     }
 }
