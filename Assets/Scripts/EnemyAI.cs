@@ -20,9 +20,12 @@ public class EnemyAI : MonoBehaviour
     private Rigidbody2D rb;
     private float shootTimer;
     private CombatManager combatManager;
+    private Animator animator;
+    private Vector2 lastMoveDir;
 
     void Start()
     {
+        animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0f;
         rb.freezeRotation = true;
@@ -48,6 +51,28 @@ public class EnemyAI : MonoBehaviour
         {
             Vector2 dir = ((Vector2)player.position - (Vector2)transform.position).normalized;
             rb.linearVelocity = dir * moveSpeed + separation * separationForce;
+            Vector2 velocity = rb.linearVelocity;
+
+            if (velocity.magnitude > 0.1f)
+            {
+                Vector2 moveDir = velocity.normalized;
+
+                animator.SetBool("isWalking", true);
+                animator.SetFloat("InputX", moveDir.x);
+                animator.SetFloat("InputY", moveDir.y);
+
+                // Guarda última direção
+                lastMoveDir = moveDir;
+                animator.SetFloat("LastInputX", lastMoveDir.x);
+                animator.SetFloat("LastInputY", lastMoveDir.y);
+            }
+            else
+            {
+                animator.SetBool("isWalking", false);
+
+                animator.SetFloat("LastInputX", lastMoveDir.x);
+                animator.SetFloat("LastInputY", lastMoveDir.y);
+            }
         }
         else
         {
