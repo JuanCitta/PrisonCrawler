@@ -59,6 +59,11 @@ public class GameManager : MonoBehaviour
         currentNPC   = null;
         currentBiome = BiomeType.Cave;
         QuestManager.Instance?.Reset();
+
+        // Reseta posição do player para o centro antes de carregar a cena
+        if (PlayerHealth.Instance != null)
+            PlayerHealth.Instance.transform.position = Vector3.zero;
+
         SceneManager.LoadScene("StartRoom");
     }
 
