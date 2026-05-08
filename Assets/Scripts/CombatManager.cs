@@ -30,13 +30,5 @@ public class CombatManager : MonoBehaviour
     {
         foreach (var door in doors)
             door.Unlock();
-
-        // pega o NPC atual
-        string npc = GameManager.Instance.currentNPC;
-
-        if (!string.IsNullOrEmpty(npc))
-        {
-            QuestManager.Instance.StartOrProgressQuest(npc);
-        }
     }
 }

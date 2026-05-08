@@ -3,17 +3,11 @@ using UnityEngine.InputSystem;
 
 public class PlayerShoot : MonoBehaviour
 {
-    public GameObject projectilePrefab;
-    public float projectileSpeed = 8f;
-    public float shootCooldown = 0.25f;
+    // Arma atualmente equipada (null = sem arma, não pode atirar)
+    public WeaponData equippedWeapon;
 
     private float cooldownTimer = 0f;
     private Camera cam;
-
-    void Start()
-    {
-        cam = Camera.main;
-    }
 
     void OnEnable()
     {
@@ -27,25 +21,37 @@ public class PlayerShoot : MonoBehaviour
 
         if (Mouse.current.leftButton.wasPressedThisFrame && cooldownTimer <= 0f)
         {
+            if (equippedWeapon == null) return;   // sem arma = sem tiro
             Shoot();
-            cooldownTimer = shootCooldown;
+            cooldownTimer = equippedWeapon.shootCooldown;
         }
+    }
+
+    /// <summary>Equipa uma arma (chamado pelo WeaponPickup ao coletar).</summary>
+    public void Equip(WeaponData weapon)
+    {
+        equippedWeapon = weapon;
+        Debug.Log($"[PlayerShoot] Arma equipada: {weapon.weaponName}");
     }
 
     void Shoot()
     {
         if (cam == null) cam = Camera.main;
-        Vector2 mouseWorld = cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        Vector2 dir = (mouseWorld - (Vector2)transform.position).normalized;
+        if (cam == null) return;
 
-        Vector2 spawnPos = (Vector2)transform.position + dir * 0.5f;
-        GameObject proj = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
+        Vector2 mouseWorld = cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 dir        = (mouseWorld - (Vector2)transform.position).normalized;
+        Vector2 spawnPos   = (Vector2)transform.position + dir * 0.5f;
+
+        GameObject proj = Instantiate(equippedWeapon.projectilePrefab, spawnPos, Quaternion.identity);
 
         Projectile p = proj.GetComponent<Projectile>();
         if (p != null)
         {
             p.isPlayerProjectile = true;
-            p.speed = projectileSpeed;
+            p.damage             = equippedWeapon.damage;
+            p.speed              = equippedWeapon.projectileSpeed;
+            p.lifetime           = equippedWeapon.projectileLifetime;
             p.SetDirection(dir);
         }
     }

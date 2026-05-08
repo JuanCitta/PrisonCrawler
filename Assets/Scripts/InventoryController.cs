@@ -9,16 +9,9 @@ public class InventoryController : MonoBehaviour
 
     void Start()
     {
-        for(int i = 0; i < slotcount; i++)
-        {
-            Slot slot = Instantiate(slotPrefab, inventoryPanel.transform).GetComponent<Slot>();
-            if(i < itemPrefabs.Length)
-            {
-                GameObject item = Instantiate(itemPrefabs[i],slot.transform);
-                item.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-                slot.currentItem = item;
-            }
-        }        
+        // Cria os slots vazios — itens são adicionados via WeaponPickup/AddItem
+        for (int i = 0; i < slotcount; i++)
+            Instantiate(slotPrefab, inventoryPanel.transform);
     }
 
     public bool AddItem(GameObject itemPrefab)
