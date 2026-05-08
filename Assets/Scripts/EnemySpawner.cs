@@ -23,11 +23,11 @@ public class EnemySpawner : MonoBehaviour
         {
             // Sala Knight: muitos inimigos, rápidos, corpo a corpo — se aproximam mais
             case "Knight":
-                count         = 5;
-                moveSpeed     = 3.0f;
+                count         = 8;
+                moveSpeed     = 4.0f;
                 stopDistance  = 0.8f;
                 shootInterval = 3.0f;
-                projectileSpeed = 4.0f;
+                projectileSpeed = 5.0f;
                 break;
 
             // Sala Archer: menos inimigos, ficam à distância e disparam rápido

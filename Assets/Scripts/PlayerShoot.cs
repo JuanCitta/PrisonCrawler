@@ -42,8 +42,10 @@ public class PlayerShoot : MonoBehaviour
         Vector2 mouseWorld = cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         Vector2 dir        = (mouseWorld - (Vector2)transform.position).normalized;
         Vector2 spawnPos   = (Vector2)transform.position + dir * 0.5f;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
 
-        GameObject proj = Instantiate(equippedWeapon.projectilePrefab, spawnPos, Quaternion.identity);
+
+        GameObject proj = Instantiate(equippedWeapon.projectilePrefab, spawnPos, Quaternion.Euler(0, 0, angle));
 
         Projectile p = proj.GetComponent<Projectile>();
         if (p != null)

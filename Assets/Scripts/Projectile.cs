@@ -13,6 +13,9 @@ public class Projectile : MonoBehaviour
     public void SetDirection(Vector2 dir)
     {
         direction = dir.normalized;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 
     void Start()
@@ -22,14 +25,13 @@ public class Projectile : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(direction * speed * Time.deltaTime);
+        transform.Translate(direction * speed * Time.deltaTime, Space.World);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (isPlayerProjectile)
         {
-            // Projétil do jogador: acerta inimigos (detectado pelo componente EnemyHealth)
             EnemyHealth enemy = other.GetComponent<EnemyHealth>();
             if (enemy != null)
             {
@@ -40,7 +42,6 @@ public class Projectile : MonoBehaviour
         }
         else
         {
-            // Projétil do inimigo: acerta o jogador
             if (other.CompareTag("Player"))
             {
                 PlayerHealth.Instance?.TakeDamage(damage);
@@ -49,7 +50,6 @@ public class Projectile : MonoBehaviour
             }
         }
 
-        // Ambos destroem ao bater em parede (tilemap)
         if (other.GetComponent<TilemapCollider2D>() != null
          || other.GetComponent<CompositeCollider2D>() != null)
         {
