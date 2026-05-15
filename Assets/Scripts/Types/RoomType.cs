@@ -1,7 +1,7 @@
 public enum RoomType
 {
     Combat,
-    Heal,
-    Forge,
+    Camp,    // Sala de descanso — recupera 1 vida
+    Forge,   // Forja — melhora a arma
     Risk
 }

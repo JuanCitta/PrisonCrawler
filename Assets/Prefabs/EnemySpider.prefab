@@ -12,10 +12,10 @@ GameObject:
   - component: {fileID: 3110868553833306644}
   - component: {fileID: 6211080120814217709}
   - component: {fileID: 2002837636255908128}
-  - component: {fileID: 4334485582506797444}
   - component: {fileID: 5963692941530142811}
   - component: {fileID: 2645734580291962382}
   - component: {fileID: 907422545829438582}
+  - component: {fileID: 3291022691787992639}
   m_Layer: 0
   m_Name: EnemySpider
   m_TagString: Enemy
@@ -87,7 +87,7 @@ SpriteRenderer:
   m_SortingLayer: 4
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 1423635784, guid: f27fbfeba7b5509489663cf2c15ef67d, type: 3}
+  m_Sprite: {fileID: 653160109, guid: 12de0b7c3872ee749ab571d97af1fe15, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -170,25 +170,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.0858303, y: 1.0858307}
   m_EdgeRadius: 0
---- !u!114 &4334485582506797444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5725433250185830980}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ee0a015a210a35489dedeb05c2866c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyAI
-  moveSpeed: 2
-  stopDistance: 2
-  projectilePrefab: {fileID: 9216036010669211095, guid: 7d09a57cc8999a64eb9eb7addc131184, type: 3}
-  shootInterval: 2
-  projectileSpeed: 10
-  separationRadius: 1.2
-  separationForce: 3
 --- !u!114 &5963692941530142811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -238,3 +219,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3291022691787992639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5725433250185830980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee0a015a210a35489dedeb05c2866c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpiderAI
+  moveSpeed: 2
+  stopDistance: 2
+  projectilePrefab: {fileID: 9216036010669211095, guid: 7d09a57cc8999a64eb9eb7addc131184, type: 3}
+  shootInterval: 1.2
+  projectileSpeed: 5
+  projectileDamage: 1
+  projectileLifetime: 3
+  separationRadius: 1.2
+  separationForce: 3

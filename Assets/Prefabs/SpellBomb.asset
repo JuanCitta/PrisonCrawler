@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdecee67c6642c44a882b6699543676c, type: 3}
+  m_Name: SpellBomb
+  m_EditorClassIdentifier: Assembly-CSharp::AbilityData
+  abilityName: Spellbomb
+  abilityType: 1
+  abilityCooldown: 10
+  rapidFireDuration: 0
+  rapidFireCooldownMultiplier: 0
+  spellBombProjectilePrefab: {fileID: 9216036010669211095, guid: 7d09a57cc8999a64eb9eb7addc131184, type: 3}
+  spellBombProjectileCount: 8
+  spellBombDamage: 1
+  spellBombProjectileSpeed: 6
+  spellBombProjectileLifetime: 1.5
+  inventoryIcon: {fileID: -1825918556, guid: def01ed9af12d7b4c9f575d6b76552f7, type: 3}

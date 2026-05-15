@@ -5,6 +5,12 @@ public class RoomManager : MonoBehaviour
     public Door doorLeft;
     public Door doorRight;
 
+    [Header("Salas especiais")]
+    [Tooltip("Desmarca no StartRoom, ForgeRoom e CampRoom")]
+    public bool allowSpecialRooms = true;
+    [Range(0f, 1f)] public float forgeChance = 0.25f;
+    [Range(0f, 1f)] public float campChance  = 0.25f;
+
     void Start()
     {
         GenerateDoors();
@@ -12,24 +18,42 @@ public class RoomManager : MonoBehaviour
 
     void GenerateDoors()
     {
-        // Sempre duas opções de sala de combate com NPCs diferentes
-        string npc1 = GetRandomNPC();
-        string npc2;
-
-        do { npc2 = GetRandomNPC(); }
-        while (npc2 == npc1);
-
-        // Randomiza qual NPC fica em qual lado
-        if (Random.value < 0.5f)
+        // Andar 4 → próxima sala é o boss, ambas as portas levam lá
+        int floor = GameManager.Instance?.currentFloor ?? 0;
+        if (floor == 7 || floor == 15)
         {
-            doorLeft.SetRoom(RoomType.Combat, npc1);
-            doorRight.SetRoom(RoomType.Combat, npc2);
+            doorLeft.SetBossRoom();
+            doorRight.SetBossRoom();
+            doorLeft.Unlock();
+            doorRight.Unlock();
+            return;
         }
-        else
+
+        // Porta esquerda: sempre Combat
+        string npcLeft = GetRandomNPC();
+        doorLeft.SetRoom(RoomType.Combat, npcLeft);
+
+        // Porta direita: especial só se permitido
+        if (allowSpecialRooms)
         {
-            doorLeft.SetRoom(RoomType.Combat, npc2);
-            doorRight.SetRoom(RoomType.Combat, npc1);
+            float roll = Random.value;
+
+            if (roll < forgeChance)
+            {
+                doorRight.SetRoom(RoomType.Forge);
+                return;
+            }
+            else if (roll < forgeChance + campChance)
+            {
+                doorRight.SetRoom(RoomType.Camp);
+                return;
+            }
         }
+
+        // Combat com NPC diferente da esquerda
+        string npcRight;
+        do { npcRight = GetRandomNPC(); } while (npcRight == npcLeft);
+        doorRight.SetRoom(RoomType.Combat, npcRight);
     }
 
     string GetRandomNPC()

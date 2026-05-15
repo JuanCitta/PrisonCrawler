@@ -2,78 +2,134 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject enemyPrefab;
+    [Header("Inimigos — Caverna")]
+    public GameObject spiderPrefab;
+    public GameObject giantSpiderPrefab;
+    public GameObject batPrefab;
+    public GameObject mushroomPrefab;
 
-    void Start()
+    [Header("Inimigos — Castelo")]
+    public GameObject spiritPrefab;
+    public GameObject beastPrefab;
+    public GameObject cyclopsPrefab;
+    public GameObject tenguPrefab;
+
+    [Header("Área de spawn")]
+    public float spawnMinX = 2f;
+    public float spawnMaxX = 6f;
+    public float spawnMinY = 1.5f;
+    public float spawnMaxY = 3.5f;
+
+    void Awake()
     {
-        SpawnEnemies();
+        if (GameManager.Instance == null) return;
+
+        int       floor = GameManager.Instance.currentFloor;
+        string    npc   = GameManager.Instance.currentNPC;
+        BiomeType biome = GameManager.Instance.currentBiome;
+
+        // Boss final — Tengu (floor 16)
+        if (floor == 16)
+        {
+            SpawnTengu();
+            return;
+        }
+
+        // Boss da caverna (floor 8)
+        if (floor == 8 && biome == BiomeType.Cave)
+        {
+            SpawnBossRoom();
+            return;
+        }
+
+        // Inimigos extras por andar (1 extra a cada sala de combate)
+        int bonus = Mathf.Max(0, floor - 1);
+
+        // Composição baseada em bioma + NPC
+        if (biome == BiomeType.Castle)
+            SpawnCastle(npc, bonus);
+        else
+            SpawnCave(npc, bonus);
     }
 
-    void SpawnEnemies()
+    // ── Caverna ──────────────────────────────────────────────────────────────
+
+    void SpawnCave(string npc, int bonus)
     {
-        string roomType = GameManager.Instance.currentNPC;
-
-        int count;
-        float moveSpeed;
-        float stopDistance;
-        float shootInterval;
-        float projectileSpeed;
-
-        switch (roomType)
+        switch (npc)
         {
-            // Sala Knight: muitos inimigos, rápidos, corpo a corpo — se aproximam mais
             case "Knight":
-                count         = 8;
-                moveSpeed     = 4.0f;
-                stopDistance  = 0.8f;
-                shootInterval = 3.0f;
-                projectileSpeed = 5.0f;
+                Spawn(batPrefab,    4 + bonus);
+                Spawn(spiderPrefab, 2);
                 break;
-
-            // Sala Archer: menos inimigos, ficam à distância e disparam rápido
-            case "Archer":
-                count         = 3;
-                moveSpeed     = 1.5f;
-                stopDistance  = 3.5f;
-                shootInterval = 1.0f;
-                projectileSpeed = 8.0f;
-                break;
-
-            // Sala Mage: poucos inimigos, projéteis mais rápidos e frequentes
             case "Mage":
-                count         = 2;
-                moveSpeed     = 1.5f;
-                stopDistance  = 3.0f;
-                shootInterval = 1.5f;
-                projectileSpeed = 6.5f;
+                Spawn(mushroomPrefab, 2);
+                Spawn(spiderPrefab,   2 + bonus);
+                Spawn(batPrefab,      1);
                 break;
-
-            default:
-                count         = 3;
-                moveSpeed     = 2.0f;
-                stopDistance  = 2.0f;
-                shootInterval = 2.0f;
-                projectileSpeed = 5.0f;
+            default: // Archer
+                Spawn(spiderPrefab,   4 + bonus);
+                Spawn(mushroomPrefab, 1);
                 break;
         }
+    }
 
-        for (int i = 0; i < count; i++)
+    void SpawnTengu()
+    {
+        if (tenguPrefab != null)
+            Instantiate(tenguPrefab, new Vector2(0f, 2f), Quaternion.identity);
+        else
+            Debug.LogWarning("[EnemySpawner] Tengu Prefab não atribuído!");
+    }
+
+    void SpawnBossRoom()
+    {
+        if (giantSpiderPrefab != null)
+            Instantiate(giantSpiderPrefab,
+                new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)),
+                Quaternion.identity);
+        Spawn(spiderPrefab, 2);
+    }
+
+    // ── Castelo ──────────────────────────────────────────────────────────────
+
+    void SpawnCastle(string npc, int bonus)
+    {
+        switch (npc)
         {
-            Vector2 pos = new Vector2(
-                Random.Range(-4f, 4f),
-                Random.Range(-3f, 3f)
-            );
-
-            GameObject enemy = Instantiate(enemyPrefab, pos, Quaternion.identity);
-
-            EnemyAI ai = enemy.GetComponent<EnemyAI>();
-            if (ai != null)
-            {
-                ai.moveSpeed      = moveSpeed;
-                ai.stopDistance   = stopDistance;
-                ai.shootInterval  = shootInterval;
-                ai.projectileSpeed = projectileSpeed;
-            }
+            case "Knight":
+                Spawn(beastPrefab,  2 + bonus);
+                Spawn(spiritPrefab, 3);
+                break;
+            case "Archer":
+                Spawn(cyclopsPrefab, 2 + bonus);
+                Spawn(spiritPrefab,  2);
+                Spawn(beastPrefab,   1);
+                break;
+            default: // Mage
+                Spawn(cyclopsPrefab, 2 + bonus);
+                Spawn(beastPrefab,   2);
+                Spawn(spiritPrefab,  1);
+                break;
         }
+    }
+
+    // ── Helpers ──────────────────────────────────────────────────────────────
+
+    void Spawn(GameObject prefab, int count)
+    {
+        if (prefab == null) return;
+        for (int i = 0; i < count; i++)
+            Instantiate(prefab, GetSpawnPosition(), Quaternion.identity);
+    }
+
+    Vector2 GetSpawnPosition()
+    {
+        float signX = Random.value > 0.5f ? 1f : -1f;
+        float signY = Random.value > 0.5f ? 1f : -1f;
+        return new Vector2(
+            signX * Random.Range(spawnMinX, spawnMaxX),
+            signY * Random.Range(spawnMinY, spawnMaxY)
+        );
     }
 }

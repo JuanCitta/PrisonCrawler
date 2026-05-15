@@ -23,10 +23,7 @@ public class WeaponData : ScriptableObject
     [Header("Cadência")]
     public float shootCooldown = 0.25f;
 
-    [Header("Inventário (opcional)")]
-    /// <summary>
-    /// Prefab de UI a ser adicionado ao inventário quando a arma for coletada.
-    /// Deixe vazio se não quiser mostrar no inventário.
-    /// </summary>
-    public GameObject inventoryItemPrefab;
+    [Header("Inventário")]
+    [Tooltip("Ícone que aparece no slot do inventário ao coletar esta arma. Arraste o sprite aqui.")]
+    public Sprite inventoryIcon;
 }

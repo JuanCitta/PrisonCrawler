@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d15c0b8c854d4c4b814a1417bcf71f4, type: 3}
+  m_Name: WandData
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponData
+  weaponName: Wand
+  projectilePrefab: {fileID: 1720675756411240411, guid: 3637bc4536846394eab80860d909e603, type: 3}
+  damage: 2
+  projectileSpeed: 5
+  projectileLifetime: 1.5
+  shootCooldown: 0.6
+  inventoryIcon: {fileID: -247429320, guid: bd163f9e343dae84cb924411a0950da2, type: 3}

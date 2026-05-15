@@ -11,6 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CombatRoom.unity
     guid: 68eb9085847e0a143b1b790de7c14765
+  - enabled: 1
+    path: Assets/Scenes/CampRoom.unity
+    guid: 4efc11c3a2934964a99c054deb8b059e
+  - enabled: 1
+    path: Assets/Scenes/ForgeRoom.unity
+    guid: d359341c64f6bc849b5b92724f5e53d8
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

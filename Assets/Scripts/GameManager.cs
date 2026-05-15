@@ -25,20 +25,18 @@ public class GameManager : MonoBehaviour
 
     public void LoadRoom(RoomType type, string npcId = null)
     {
-        currentFloor++;
-        UpdateBiome();
-
         switch (type)
         {
             case RoomType.Combat:
+                currentFloor++;   // só salas de combate avançam o contador
+                UpdateBiome();
                 currentNPC = npcId;
                 SceneManager.LoadScene("CombatRoom");
                 break;
 
-            // Reservado para implementações futuras
-            case RoomType.Heal:
+            case RoomType.Camp:
                 currentNPC = null;
-                SceneManager.LoadScene("HealRoom");
+                SceneManager.LoadScene("CampRoom");
                 break;
 
             case RoomType.Forge:
@@ -59,20 +57,23 @@ public class GameManager : MonoBehaviour
         currentNPC   = null;
         currentBiome = BiomeType.Cave;
         QuestManager.Instance?.Reset();
+        InventoryManager.Instance?.Reset();
 
-        // Reseta posição do player para o centro antes de carregar a cena
+        // Reseta posição e stats da run do player
         if (PlayerHealth.Instance != null)
+        {
             PlayerHealth.Instance.transform.position = Vector3.zero;
+            PlayerHealth.Instance.GetComponent<PlayerShoot>()?.ResetRunStats();
+            PlayerHealth.Instance.GetComponent<PlayerAbility>()?.ResetRunStats();
+        }
 
         SceneManager.LoadScene("StartRoom");
     }
 
     void UpdateBiome()
     {
-        if (currentFloor <= 5)
+        if (currentFloor <= 8)
             currentBiome = BiomeType.Cave;
-        else if (currentFloor <= 12)
-            currentBiome = BiomeType.Corridors;
         else
             currentBiome = BiomeType.Castle;
     }

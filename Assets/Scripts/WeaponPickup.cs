@@ -1,14 +1,12 @@
 using UnityEngine;
 
-/// <summary>
-/// Coloque este script no GameObject do arco (ou qualquer arma) no mundo.
-/// Requer: Collider2D com IsTrigger = true.
-/// Quando o player tocar, equipa a arma e destrói o objeto do mundo.
-/// </summary>
 public class WeaponPickup : MonoBehaviour
 {
     [Tooltip("Asset WeaponData desta arma (crie via Assets > Create > PrisonCrawler > WeaponData)")]
     public WeaponData weaponData;
+
+    [Tooltip("Se falso, o pickup permanece no chão (usado no StartRoom para permitir troca)")]
+    public bool destroyOnPickup = true;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -24,14 +22,12 @@ public class WeaponPickup : MonoBehaviour
         if (shoot != null)
             shoot.Equip(weaponData);
 
-        // Adiciona ao inventário (se houver prefab de UI configurado)
-        if (weaponData.inventoryItemPrefab != null)
-        {
-            InventoryController inv = FindObjectOfType<InventoryController>();
-            inv?.AddItem(weaponData.inventoryItemPrefab);
-        }
+        // Adiciona ícone ao slot de arma
+        if (weaponData.inventoryIcon != null)
+            InventoryManager.Instance.AddItem(weaponData.inventoryIcon, SlotType.Weapon);
 
-        // Remove o item do mundo
-        Destroy(gameObject);
+        // Remove o item do mundo (se não for StartRoom)
+        if (destroyOnPickup)
+            Destroy(gameObject);
     }
 }

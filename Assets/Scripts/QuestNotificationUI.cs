@@ -29,10 +29,10 @@ public class QuestNotificationUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    void ShowNotification(string npcId)
+    void ShowNotification(string npcId, string rewardMsg)
     {
         if (notificationText != null)
-            notificationText.text = $"Quest completa: {npcId}!";
+            notificationText.text = $"Quest {npcId} completa!\n{rewardMsg}";
 
         gameObject.SetActive(true);
 

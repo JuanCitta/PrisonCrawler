@@ -2,8 +2,20 @@ using UnityEngine;
 
 public class CombatManager : MonoBehaviour
 {
+    public static CombatManager Instance { get; private set; }
+
     private Door[] doors;
     private int enemiesAlive;
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
+    void OnDestroy()
+    {
+        if (Instance == this) Instance = null;
+    }
 
     void Start()
     {
@@ -19,11 +31,13 @@ public class CombatManager : MonoBehaviour
     public void OnEnemyKilled()
     {
         enemiesAlive--;
-
         if (enemiesAlive <= 0)
-        {
             UnlockDoors();
-        }
+    }
+
+    public void AddEnemy()
+    {
+        enemiesAlive++;
     }
 
     void UnlockDoors()

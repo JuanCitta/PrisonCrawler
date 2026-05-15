@@ -6,6 +6,15 @@ public class PlayerShoot : MonoBehaviour
     // Arma atualmente equipada (null = sem arma, não pode atirar)
     public WeaponData equippedWeapon;
 
+    /// <summary>Modificado pelo PlayerAbility durante o RapidFire (1 = normal, 0.3 = 3x mais rápido).</summary>
+    [HideInInspector] public float shootCooldownMultiplier = 1f;
+
+    /// <summary>Acumulado pelas recompensas de quest Archer (+20% por quest completa).</summary>
+    [HideInInspector] public float projectileSpeedMultiplier = 1f;
+
+    /// <summary>Reduzido pela Forja (-20% por melhoria). 1 = normal, 0.8 = 20% mais rápido.</summary>
+    [HideInInspector] public float forgeCooldownMultiplier = 1f;
+
     private float cooldownTimer = 0f;
     private Camera cam;
 
@@ -23,7 +32,7 @@ public class PlayerShoot : MonoBehaviour
         {
             if (equippedWeapon == null) return;   // sem arma = sem tiro
             Shoot();
-            cooldownTimer = equippedWeapon.shootCooldown;
+            cooldownTimer = equippedWeapon.shootCooldown * shootCooldownMultiplier * forgeCooldownMultiplier;
         }
     }
 
@@ -32,6 +41,15 @@ public class PlayerShoot : MonoBehaviour
     {
         equippedWeapon = weapon;
         Debug.Log($"[PlayerShoot] Arma equipada: {weapon.weaponName}");
+    }
+
+    /// <summary>Reseta os multiplicadores da run ao morrer.</summary>
+    public void ResetRunStats()
+    {
+        projectileSpeedMultiplier = 1f;
+        shootCooldownMultiplier   = 1f;
+        forgeCooldownMultiplier   = 1f;
+        equippedWeapon            = null;
     }
 
     void Shoot()
@@ -52,7 +70,7 @@ public class PlayerShoot : MonoBehaviour
         {
             p.isPlayerProjectile = true;
             p.damage             = equippedWeapon.damage;
-            p.speed              = equippedWeapon.projectileSpeed;
+            p.speed              = equippedWeapon.projectileSpeed * projectileSpeedMultiplier;
             p.lifetime           = equippedWeapon.projectileLifetime;
             p.SetDirection(dir);
         }
