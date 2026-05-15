@@ -58,13 +58,9 @@ public class GameManager : MonoBehaviour
 
     public void ResetGame()
     {
-        currentFloor = 0;
-        currentNPC   = null;
-        currentBiome = BiomeType.Cave;
         QuestManager.Instance?.Reset();
         InventoryManager.Instance?.Reset();
 
-        // Reseta posição e stats da run do player
         if (PlayerHealth.Instance != null)
         {
             PlayerHealth.Instance.transform.position = Vector3.zero;
@@ -72,7 +68,9 @@ public class GameManager : MonoBehaviour
             PlayerHealth.Instance.GetComponent<PlayerAbility>()?.ResetRunStats();
         }
 
-        SceneManager.LoadScene("StartRoom");
+        Instance = null; // limpa a referência estática
+        SceneManager.LoadScene("Menu");
+        Destroy(gameObject); // destrói depois de carregar
     }
 
     void UpdateBiome()

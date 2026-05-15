@@ -15,9 +15,10 @@ GameObject:
   - component: {fileID: 6338033550184792298}
   - component: {fileID: 8101863547901384986}
   - component: {fileID: 6479835819136571679}
+  - component: {fileID: 6079236025312155699}
   m_Layer: 0
   m_Name: Tengu
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -211,3 +212,25 @@ MonoBehaviour:
   spreadAngleP1: 20
   spreadAngleP2: 15
   contactDamage: 1
+--- !u!95 &6079236025312155699
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7525592671517988052}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: d1f10a47ce179d74fb76813fb3163c34, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

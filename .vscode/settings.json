@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "PrisonCrawler(Ninja-Adenvture).slnx"
+    "dotnet.defaultSolution": "PrisonCrawler.slnx"
 }

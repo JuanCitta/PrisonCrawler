@@ -26,8 +26,8 @@ public class CombatManager : MonoBehaviour
         // inimigos instanciados (Start) estejam todos inicializados.
         yield return null;
 
-        // Conta por EnemyHealth — funciona independente de tag
-        enemiesAlive = FindObjectsOfType<EnemyHealth>().Length;
+        // Conta por tag "Enemy" — armadilhas (Mushroom Untagged) ficam de fora
+        enemiesAlive = GameObject.FindGameObjectsWithTag("Enemy").Length;
 
         if (enemiesAlive <= 0)
             UnlockDoors();
