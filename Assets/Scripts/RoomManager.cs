@@ -8,8 +8,8 @@ public class RoomManager : MonoBehaviour
     [Header("Salas especiais")]
     [Tooltip("Desmarca no StartRoom, ForgeRoom e CampRoom")]
     public bool allowSpecialRooms = true;
-    [Range(0f, 1f)] public float forgeChance = 0.25f;
-    [Range(0f, 1f)] public float campChance  = 0.25f;
+    [Range(0f, 1f)] public float forgeChance = 0.1f;
+    [Range(0f, 1f)] public float campChance  = 0.1f;
 
     void Start()
     {

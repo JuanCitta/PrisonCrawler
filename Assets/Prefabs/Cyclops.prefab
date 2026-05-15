@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 395613597906333408}
   - component: {fileID: 1864974708080160924}
   - component: {fileID: 5162140446592929560}
+  - component: {fileID: 8460031840103375675}
   m_Layer: 0
   m_Name: Cyclops
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,8 +82,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 92201967
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -1887511939, guid: 25baeb5bd00f42542b76249f1ea1861d, type: 3}
@@ -190,3 +191,17 @@ MonoBehaviour:
   projectileDamage: 2
   projectileLifetime: 4
   moveSpeed: 0.4
+--- !u!114 &8460031840103375675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7215885638537495702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e2382e72c9f75e43b2015d0d7f50f82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageFlash
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.12

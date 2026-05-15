@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 203249396184886888}
   - component: {fileID: 8513013862586365473}
   - component: {fileID: 2134207171468320040}
+  - component: {fileID: 7442415153890820450}
   m_Layer: 0
   m_Name: Spirit
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -81,8 +82,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 92201967
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -611523195, guid: f0d440b3ba87c9449b6544d246c5e2b2, type: 3}
@@ -188,3 +189,17 @@ MonoBehaviour:
   contactDamage: 1
   teleportRangeX: 5
   teleportRangeY: 3
+--- !u!114 &7442415153890820450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495192200141867018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e2382e72c9f75e43b2015d0d7f50f82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DamageFlash
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  flashDuration: 0.12

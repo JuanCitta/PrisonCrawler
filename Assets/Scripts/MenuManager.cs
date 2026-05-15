@@ -14,7 +14,12 @@ public class MenuManager : MonoBehaviour
     {
         if (Keyboard.current.iKey.wasPressedThisFrame)
         {
-            menuCanvas.SetActive(!menuCanvas.activeSelf);
+            bool opening = !menuCanvas.activeSelf;
+            menuCanvas.SetActive(opening);
+
+            // Atualiza os stats sempre que o menu é aberto
+            if (opening)
+                FindObjectOfType<StatsUI>()?.Refresh();
         }
     }
 }

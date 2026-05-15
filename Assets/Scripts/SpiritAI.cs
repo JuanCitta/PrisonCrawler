@@ -38,10 +38,9 @@ public class SpiritAI : MonoBehaviour
 
         combatManager = CombatManager.Instance;
 
-        // Subscreeve ao evento de dano para fazer o teleporte
+        // Teleporta sempre que leva dano (sobrevive)
         health = GetComponent<EnemyHealth>();
-        if (health != null) health.onDeath += () => { }; // placeholder
-        // Usamos OnTriggerEnter2D para dano e um componente de flash para detetar hit
+        if (health != null) health.onHit += OnHit;
     }
 
     void Update()

@@ -16,6 +16,11 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+
+            // Garante sempre estado limpo ao iniciar
+            currentFloor = 0;
+            currentBiome = BiomeType.Cave;
+            currentNPC   = null;
         }
         else
         {

@@ -7,6 +7,8 @@ public class EnemyHealth : MonoBehaviour
     public float HealthRatio => maxHealth > 0 ? (float)currentHealth / maxHealth : 0f;
     private DamageFlash damageFlash;
     public System.Action onDeath;
+    /// <summary>Disparado sempre que o inimigo leva dano (mas sobrevive).</summary>
+    public System.Action onHit;
 
     void Start()
     {
@@ -23,6 +25,10 @@ public class EnemyHealth : MonoBehaviour
         {
             onDeath?.Invoke();
             Destroy(gameObject);
+        }
+        else
+        {
+            onHit?.Invoke();
         }
     }
 }

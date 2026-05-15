@@ -32,7 +32,7 @@ public class TenguBoss : MonoBehaviour
     public GameObject projectilePrefab;
     public float projectileSpeed    = 6f;
     public int   projectileDamage   = 1;
-    public float projectileLifetime = 3f;
+    public float projectileLifetime = 3.3f;
     public float spreadAngleP1      = 20f;   // ângulo entre projéteis fase 1
     public float spreadAngleP2      = 15f;   // ângulo entre projéteis fase 2
 

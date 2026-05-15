@@ -6,6 +6,9 @@ public class PlayerShoot : MonoBehaviour
     // Arma atualmente equipada (null = sem arma, não pode atirar)
     public WeaponData equippedWeapon;
 
+    [Header("Audio")]
+    public AudioClip shootSFX;
+
     /// <summary>Modificado pelo PlayerAbility durante o RapidFire (1 = normal, 0.3 = 3x mais rápido).</summary>
     [HideInInspector] public float shootCooldownMultiplier = 1f;
 
@@ -32,6 +35,7 @@ public class PlayerShoot : MonoBehaviour
         {
             if (equippedWeapon == null) return;   // sem arma = sem tiro
             Shoot();
+            AudioManager.Instance?.PlaySFX(shootSFX);
             cooldownTimer = equippedWeapon.shootCooldown * shootCooldownMultiplier * forgeCooldownMultiplier;
         }
     }

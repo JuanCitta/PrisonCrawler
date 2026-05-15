@@ -15,7 +15,7 @@ public class CyclopsAI : MonoBehaviour
     public float shootInterval      = 2.5f;
     public float projectileSpeed    = 4f;
     public int   projectileDamage   = 2;
-    public float projectileLifetime = 4f;
+    public float projectileLifetime = 3.3f;
 
     [Header("Movimento mínimo")]
     public float moveSpeed = 0.4f;   // anda muito devagar, quase estático

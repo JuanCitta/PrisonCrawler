@@ -14,6 +14,23 @@ public class InventoryController : MonoBehaviour
 
     void Start()
     {
+        // Se inventoryPanel não foi atribuído no Inspector, usa o próprio GameObject
+        if (inventoryPanel == null)
+        {
+            inventoryPanel = gameObject;
+            Debug.LogWarning("[InventoryController] inventoryPanel não atribuído — usando o próprio GameObject.");
+        }
+
+        if (slotPrefab == null)
+        {
+            Debug.LogError("[InventoryController] slotPrefab não atribuído! Abre o InventoryController no Inspector e liga o prefab.");
+            return;
+        }
+
+        // Remove slots antigos para evitar duplicatas ao reativar
+        foreach (Transform child in inventoryPanel.transform)
+            Destroy(child.gameObject);
+
         // Cria slots de arma
         for (int i = 0; i < weaponSlotCount; i++)
         {
@@ -33,6 +50,8 @@ public class InventoryController : MonoBehaviour
         // Restaura itens já coletados nesta run
         foreach (var (icon, type) in InventoryManager.Instance.GetItems())
             AddIcon(icon, type);
+
+        Debug.Log($"[InventoryController] {inventoryPanel.transform.childCount} slots criados. Itens restaurados: {InventoryManager.Instance.GetItems().Count}");
     }
 
     void OnEnable()

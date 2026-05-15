@@ -16,7 +16,7 @@ public class GiantSpiderAI : MonoBehaviour
     public float shootInterval      = 1.8f;
     public float projectileSpeed    = 4.5f;
     public int   projectileDamage   = 1;
-    public float projectileLifetime = 3f;
+    public float projectileLifetime = 3.3f;
     [Tooltip("Ângulo entre cada projétil do leque")]
     public float spreadAngle = 20f;
 

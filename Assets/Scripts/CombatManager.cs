@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class CombatManager : MonoBehaviour
@@ -17,15 +18,19 @@ public class CombatManager : MonoBehaviour
         if (Instance == this) Instance = null;
     }
 
-    void Start()
+    IEnumerator Start()
     {
         doors = FindObjectsOfType<Door>();
-        enemiesAlive = GameObject.FindGameObjectsWithTag("Enemy").Length;
+
+        // Aguarda 1 frame para que o EnemySpawner (Awake) e os
+        // inimigos instanciados (Start) estejam todos inicializados.
+        yield return null;
+
+        // Conta por EnemyHealth — funciona independente de tag
+        enemiesAlive = FindObjectsOfType<EnemyHealth>().Length;
 
         if (enemiesAlive <= 0)
-        {
             UnlockDoors();
-        }
     }
 
     public void OnEnemyKilled()
@@ -35,6 +40,7 @@ public class CombatManager : MonoBehaviour
             UnlockDoors();
     }
 
+    /// <summary>Chamado quando um inimigo spawna outro (ex: GiantSpider → filhotes).</summary>
     public void AddEnemy()
     {
         enemiesAlive++;
